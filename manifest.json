@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "LanguageLabeler",
+  "version": "1.0",
+
+  "description": "Adds language label to LinkedIn job postings",
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "js": ["language.js"]
+    }
+  ]
+}
