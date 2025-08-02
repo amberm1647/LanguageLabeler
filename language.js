@@ -1,5 +1,3 @@
-// follow link from linkedin to external job posting
-
 // find DOM object that corresponds to job desc
 
 // compare to list of language names ie german, deutsch, english, etc
