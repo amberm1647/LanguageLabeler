@@ -80,16 +80,6 @@ async function getLanguageKeywords(){
 
 getLanguageKeywords();
 
-// const jobDesc = document.getElementById("job-details");
-// if(jobDesc) {
-//     console.log("jobDesc found");
-//     var text = [];
-//     jobDesc.childNodes.forEach((node) => {
-//         text.push(node.textContent);
-//     });
-//     console.log(text);
-
-// };
 
 // compare to list of language names ie german, deutsch, english, etc
 
