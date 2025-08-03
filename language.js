@@ -22,7 +22,7 @@ async function getJobDesc() {
         jobDesc.childNodes.forEach((node) => {
             text.push(node.textContent);
         });
-        console.log(text);
+        // console.log(text);
         return text;
     };
 }
