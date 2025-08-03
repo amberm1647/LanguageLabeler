@@ -2,8 +2,8 @@
 
 async function waiting() {
     console.log("Before sleep");
-    await sleep(10000); // Sleep for 5 seconds
-    console.log("After sleep [After 10 Seconds]");
+    await sleep(7000); // Sleep for 5 seconds
+    console.log("After sleep [After 7 Seconds]");
     return true;
 }
   
@@ -23,11 +23,28 @@ async function getJobDesc() {
             text.push(node.textContent);
         });
         console.log(text);
-
+        return text;
     };
 }
 
-getJobDesc();
+async function flattenText() {
+    const acquired_text = await getJobDesc()
+    var arrayLength = acquired_text.length;
+    for (var i = 0; i < arrayLength; i++) {
+        acquired_text[i] = acquired_text[i].trim();
+        acquired_text[i] = acquired_text[i].replace(/\s+/g, " ");
+        acquired_text[i] = acquired_text[i].replace(/\n/g, " ");
+        acquired_text[i] = acquired_text[i].concat(acquired_text[i]," ");
+        console.log(acquired_text[i]);
+    }
+    var all_text = acquired_text.join(",");
+    all_text = all_text.replace(" , , , ,", " ");
+    all_text = all_text.replace(" ,", "");
+    all_text = all_text.toLowerCase();
+    return all_text;
+}
+
+flattenText();
 
 // const jobDesc = document.getElementById("job-details");
 // if(jobDesc) {
