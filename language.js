@@ -80,36 +80,6 @@ async function getLanguageKeywords(){
 
 getLanguageKeywords();
 
-
-// Add Observer to Observe the DOM
-const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        if (mutation.type === "childList") {
-            console.log("Child list mutation detected");
-        };
-    });
-});
-
-// Start observing the DOM
-observer.observe(document, { childList: true, subtree: true });
-
-
-// Adding the button Element to the DOM 
-//  onPageLoad = function(aEvent) {
-//     var fblike = doc.getElementsByTagName("fb-root");
-//     var button = doc.createElement("input");
-//     button.setAttribute("type", "button");
-//     button.setAttribute("value", "valore");
-//     button.setAttribute("name", "nome");
-//     var parentDiv = fblike.parentNode;
-//     parentDiv.insertBefore(button, fblike);
-//  }
-
-
-// compare to list of language names ie german, deutsch, english, etc
-
-// parse w/ regex and find language keywords
-
 // create html/css for label to add
 
 // create instance of label, add to DOM
