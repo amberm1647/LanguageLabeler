@@ -41,7 +41,7 @@ async function flattenText() {
     all_text = all_text.replace(" , , , ,", " ");
     all_text = all_text.replace(" ,", "");
     all_text = all_text.toLowerCase();
-    console.log(all_text);
+    return all_text;
 }
 
 flattenText();
