@@ -75,36 +75,41 @@ async function getLanguageKeywords(){
     output.sort();
     const outputString = output.join(", ");
     console.log("Language Keywords found: ", outputString);
-    // return outputString;
+    return outputString;
 }
 
-getLanguageKeywords();
+// getLanguageKeywords();
 
 
 // Add Observer to Observe the DOM
-const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        if (mutation.type === "childList") {
-            console.log("Child list mutation detected");
-        };
-    });
-});
+// const observer = new MutationObserver((mutations) => {
+//     mutations.forEach((mutation) => {
+//         if (mutation.type === "childList") {
+//             console.log("Child list mutation detected");
+//         };
+//     });
+// });
 
-// Start observing the DOM
-observer.observe(document, { childList: true, subtree: true });
+// // Start observing the DOM
+// observer.observe(document, { childList: true, subtree: true });
 
+// pulls html from site, makes copy to add button, creates button with languages, adds to DOM
 
-// Adding the button Element to the DOM 
-//  onPageLoad = function(aEvent) {
-//     var fblike = doc.getElementsByTagName("fb-root");
-//     var button = doc.createElement("input");
-//     button.setAttribute("type", "button");
-//     button.setAttribute("value", "valore");
-//     button.setAttribute("name", "nome");
-//     var parentDiv = fblike.parentNode;
-//     parentDiv.insertBefore(button, fblike);
-//  }
+async function addLanguageLabel(){
+    const fullText = await getLanguageKeywords()
+    console.log("Running addLanguageLabel");
+    var parent = document.getElementsByClassName("job-details-fit-level-preferences");
+    var ref = parent[0]
+    var kids = ref.children;
+    var child = kids[0];
 
-// create html/css for label to add
+    var languageLabel = child.cloneNode(true);
+    // var languageLabel = kids[0];
+    const outputStr = "Languages: "
+    const outputLabel = outputStr.concat(fullText);
+    languageLabel.innerText = outputLabel;
 
-// create instance of label, add to DOM
+    ref.insertBefore(languageLabel,null);
+}
+
+addLanguageLabel();
