@@ -96,19 +96,20 @@ async function getLanguageKeywords(){
 // pulls html from site, makes copy to add button, creates button with languages, adds to DOM
 
 async function addLanguageBubble(){
-    const fullText = await getLanguageKeywords()
+    const fullText = await getLanguageKeywords();
     console.log("Running addLanguageBubble");
     var parent = document.getElementsByClassName("job-details-fit-level-preferences");
-    var ref = parent[0]
+    var ref = parent[0];
     var kids = ref.children;
     var child = kids[0];
 
     var languageLabel = child.cloneNode(true);
-    const outputStr = "Languages: "
+    const outputStr = "Languages: ";
     const outputLabel = outputStr.concat(fullText);
     languageLabel.innerText = outputLabel;
 
     ref.insertBefore(languageLabel,null);
+    return true;
 }
 
 async function addLanguageHighlight(){
@@ -138,4 +139,10 @@ async function addLanguageHighlight(){
     ref.insertBefore(languageLabel,null);  
 }
 
-addLanguageHighlight();
+try{
+    addLanguageBubble();
+}
+catch(err){
+    console.log("error occurred: ", err);
+    addLanguageHighlight();
+}
