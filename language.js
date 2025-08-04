@@ -75,36 +75,67 @@ async function getLanguageKeywords(){
     output.sort();
     const outputString = output.join(", ");
     console.log("Language Keywords found: ", outputString);
-    // return outputString;
+    return outputString;
 }
 
-getLanguageKeywords();
+// getLanguageKeywords();
 
 
 // Add Observer to Observe the DOM
-const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        if (mutation.type === "childList") {
-            console.log("Child list mutation detected");
-        };
-    });
-});
+// const observer = new MutationObserver((mutations) => {
+//     mutations.forEach((mutation) => {
+//         if (mutation.type === "childList") {
+//             console.log("Child list mutation detected");
+//         };
+//     });
+// });
 
-// Start observing the DOM
-observer.observe(document, { childList: true, subtree: true });
+// // Start observing the DOM
+// observer.observe(document, { childList: true, subtree: true });
+
+// pulls html from site, makes copy to add button, creates button with languages, adds to DOM
+
+async function addLanguageBubble(){
+    const fullText = await getLanguageKeywords()
+    console.log("Running addLanguageBubble");
+    var parent = document.getElementsByClassName("job-details-fit-level-preferences");
+    var ref = parent[0]
+    var kids = ref.children;
+    var child = kids[0];
+
+    var languageLabel = child.cloneNode(true);
+    const outputStr = "Languages: "
+    const outputLabel = outputStr.concat(fullText);
+    languageLabel.innerText = outputLabel;
+
+    ref.insertBefore(languageLabel,null);
+}
+
+async function addLanguageHighlight(){
+    const fullText = await getLanguageKeywords();
+    console.log("Running addLanguageHighlight");
+    var parent = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight job-details-jobs-unified-top-card__job-insight--highlight");
+    var ref = parent[0];
+    console.log("parent", parent);
 
 
-// Adding the button Element to the DOM 
-//  onPageLoad = function(aEvent) {
-//     var fblike = doc.getElementsByTagName("fb-root");
-//     var button = doc.createElement("input");
-//     button.setAttribute("type", "button");
-//     button.setAttribute("value", "valore");
-//     button.setAttribute("name", "nome");
-//     var parentDiv = fblike.parentNode;
-//     parentDiv.insertBefore(button, fblike);
-//  }
+    var example_detail = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary");
 
-// create html/css for label to add
+    console.log("example_detail", example_detail[0]);
+    // var kids = ref.children;
+    // console.log("kids", kids);
+    // var child = kids[0];
 
-// create instance of label, add to DOM
+    // var test = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary");
+    // console.log("test", test);
+    // console.log("parent of test", test.parentNode)
+
+    var languageLabel = example_detail[0].cloneNode(true);
+    const outputStr = "Languages: ";
+    const outputLabel = outputStr.concat(fullText);
+    languageLabel.innerText = outputLabel;
+
+    ref.insertBefore(languageLabel,null);  
+}
+
+addLanguageHighlight();
