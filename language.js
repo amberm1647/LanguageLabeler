@@ -112,21 +112,21 @@ async function addLanguageBubble(){
 }
 
 async function addLanguageHighlight(){
-    const fullText = await getLanguageKeywords()
+    const fullText = await getLanguageKeywords();
     console.log("Running addLanguageHighlight");
     var parent = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight job-details-jobs-unified-top-card__job-insight--highlight");
-    var ref = parent[0]
-    console.log(parent)
+    var ref = parent[0];
+    console.log("parent", parent);
     var kids = ref.children;
-    console.log(kids)
+    console.log("kids" kids);
     var child = kids[0];
 
-    var test = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary")
-    console.log(test)
-    console.log(test.parentNode)
+    var test = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary");
+    console.log("test" test);
+    console.log("parent of test" test.parentNode)
 
     var languageLabel = child.cloneNode(true);
-    const outputStr = "Languages: "
+    const outputStr = "Languages: ";
     const outputLabel = outputStr.concat(fullText);
     languageLabel.innerText = outputLabel;
 
