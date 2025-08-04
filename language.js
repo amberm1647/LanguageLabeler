@@ -117,15 +117,20 @@ async function addLanguageHighlight(){
     var parent = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight job-details-jobs-unified-top-card__job-insight--highlight");
     var ref = parent[0];
     console.log("parent", parent);
-    var kids = ref.children;
-    console.log("kids" kids);
-    var child = kids[0];
 
-    var test = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary");
-    console.log("test" test);
-    console.log("parent of test" test.parentNode)
 
-    var languageLabel = child.cloneNode(true);
+    var example_detail = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary");
+
+
+    // var kids = ref.children;
+    // console.log("kids", kids);
+    // var child = kids[0];
+
+    // var test = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary");
+    // console.log("test", test);
+    // console.log("parent of test", test.parentNode)
+
+    var languageLabel = example_detail.cloneNode(true);
     const outputStr = "Languages: ";
     const outputLabel = outputStr.concat(fullText);
     languageLabel.innerText = outputLabel;
