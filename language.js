@@ -121,7 +121,8 @@ async function addLanguageHighlight(){
 
     var example_detail = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary");
 
-
+    console.log("example_detail", example_detail);
+    console.log(typeof example_detail);
     // var kids = ref.children;
     // console.log("kids", kids);
     // var child = kids[0];
