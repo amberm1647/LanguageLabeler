@@ -95,16 +95,15 @@ async function getLanguageKeywords(){
 
 // pulls html from site, makes copy to add button, creates button with languages, adds to DOM
 
-async function addLanguageLabel(){
+async function addLanguageBubble(){
     const fullText = await getLanguageKeywords()
-    console.log("Running addLanguageLabel");
+    console.log("Running addLanguageBubble");
     var parent = document.getElementsByClassName("job-details-fit-level-preferences");
     var ref = parent[0]
     var kids = ref.children;
     var child = kids[0];
 
     var languageLabel = child.cloneNode(true);
-    // var languageLabel = kids[0];
     const outputStr = "Languages: "
     const outputLabel = outputStr.concat(fullText);
     languageLabel.innerText = outputLabel;
@@ -112,4 +111,26 @@ async function addLanguageLabel(){
     ref.insertBefore(languageLabel,null);
 }
 
-addLanguageLabel();
+async function addLanguageHighlight(){
+    const fullText = await getLanguageKeywords()
+    console.log("Running addLanguageHighlight");
+    var parent = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight job-details-jobs-unified-top-card__job-insight--highlight");
+    var ref = parent[0]
+    console.log(parent)
+    var kids = ref.children;
+    console.log(kids)
+    var child = kids[0];
+
+    var test = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary")
+    console.log(test)
+    console.log(test.parentNode)
+
+    var languageLabel = child.cloneNode(true);
+    const outputStr = "Languages: "
+    const outputLabel = outputStr.concat(fullText);
+    languageLabel.innerText = outputLabel;
+
+    ref.insertBefore(languageLabel,null);  
+}
+
+addLanguageHighlight();
