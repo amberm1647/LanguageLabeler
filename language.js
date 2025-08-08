@@ -219,6 +219,12 @@ function jobObserver(currentLabel, retryDelay = 500){
             jobObserver(retryDelay + 100);
             return;
         }
+        if (currentLabel != 'bubble' || currentLabel != 'highlight') {
+            console.log("original label not set yet...");
+            jobObserver(retryDelay + 100);
+            return;
+        }
+        console.log('currentLabel', currentLabel);
         var selectedJobBigElement = selectedJob.parentElement.parentElement;
         var jobList = selectedJobBigElement.parentElement
         // console.log("test", selectedJob);
