@@ -83,14 +83,14 @@ function addLanguageBubble(fullText){
     // const fullText = await getLanguageKeywords()
     console.log("Running addLanguageBubble");
     var parent = document.getElementsByClassName("job-details-fit-level-preferences");
-    var ref = parent[0]
+    var ref = parent[0];
     var kids = ref.children;
     var child = kids[0];
     // console.log("parent", parent);
     // console.log("child", child);
 
     var languageLabel = child.cloneNode(true);
-    const outputStr = "Languages: "
+    const outputStr = "Languages: ";
     const outputLabel = outputStr.concat(fullText);
     languageLabel.innerText = outputLabel;
 
@@ -205,7 +205,7 @@ function jobObserver(currentLabel, retryDelay = 500){
         // }
         console.log('currentLabel', currentLabel);
         var selectedJobBigElement = selectedJob.parentElement.parentElement;
-        var jobList = selectedJobBigElement.parentElement
+        var jobList = selectedJobBigElement.parentElement;
         // console.log("test", selectedJob);
         // console.log("parents", selectedJobBigElement);
         const observer = new MutationObserver((mutations) => {
