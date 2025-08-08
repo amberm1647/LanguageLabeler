@@ -2,7 +2,7 @@
 
 async function waiting() {
     console.log("Before sleep");
-    await sleep(7000); // Sleep for 5 seconds
+    await sleep(7000); // Sleep for 7 seconds
     console.log("After sleep [After 7 Seconds]");
     return true;
 }
@@ -81,18 +81,6 @@ async function getLanguageKeywords(){
 // getLanguageKeywords();
 
 
-// Add Observer to Observe the DOM
-// const observer = new MutationObserver((mutations) => {
-//     mutations.forEach((mutation) => {
-//         if (mutation.type === "childList") {
-//             console.log("Child list mutation detected");
-//         };
-//     });
-// });
-
-// // Start observing the DOM
-// observer.observe(document, { childList: true, subtree: true });
-
 // pulls html from site, makes copy to add button, creates button with languages, adds to DOM
 
 async function addLanguageBubble(){
@@ -135,7 +123,8 @@ async function addLanguageHighlight(){
     const outputLabel = outputStr.concat(fullText);
     languageLabel.innerText = outputLabel;
 
-    ref.insertBefore(languageLabel,null);  
+    ref.insertBefore(languageLabel,null);
+    return languageLabel;
 }
 
 try{
@@ -146,3 +135,21 @@ catch(err){
     console.log('error: ', err);
     addLanguageHighlight();
 }
+
+var selectedJob = document.querySelector('div[aria-current="page"]');
+var selectedJobBigElement = selectedJob.parentElement.parentElement;
+var jobList = selectedJobBigElement.parentElement
+console.log("test", selectedJob);
+console.log("parents", selectedJobBigElement);
+
+// Add Observer to Observe the DOM
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.type === "childList") {
+            console.log("Child list mutation detected");
+        };
+    });
+});
+
+// // Start observing the DOM
+observer.observe(jobList, { childList: true, subtree: true });
