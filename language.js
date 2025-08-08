@@ -138,4 +138,11 @@ async function addLanguageHighlight(){
     ref.insertBefore(languageLabel,null);  
 }
 
-addLanguageHighlight();
+try{
+    addLanguageBubble();
+
+}
+catch(err){
+    console.log('error: ', err);
+    addLanguageHighlight();
+}
