@@ -127,14 +127,24 @@ async function addLanguageHighlight(){
     return languageLabel;
 }
 
-try{
-    addLanguageBubble();
+async function langLabelTry() {
+    try{
+        languageLabel = addLanguageBubble();
+        return languageLabel;
+    }
+    catch(err){
+        console.log('error: ', err);
+        languageLabel = addLanguageHighlight();
+        return languageLabel;
+    }
+}
 
+async function onPageLoad() {
+    const waited = await waiting()
+    const langLabeled = await langLabelTry();
 }
-catch(err){
-    console.log('error: ', err);
-    addLanguageHighlight();
-}
+
+onPageLoad();
 
 var selectedJob = document.querySelector('div[aria-current="page"]');
 var selectedJobBigElement = selectedJob.parentElement.parentElement;
