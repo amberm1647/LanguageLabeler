@@ -190,7 +190,7 @@ async function onPageLoad() {
 
 
 
-function jobObserver(currentLabel, retryDelay = 500){
+async function jobObserver(currentLabel, retryDelay = 500){
     setTimeout(() => {
         var selectedJob = document.querySelector('div[aria-current="page"]');
         if (!selectedJob) {
@@ -212,13 +212,13 @@ function jobObserver(currentLabel, retryDelay = 500){
             mutations.forEach((mutation) => {
                 if (mutation.type === "childList") {
                     console.log("Child list mutation detected");
-                    if (currentLabel == 'bubble') {
+                    try{
                         removeLanguageBubble();
-                        currentLabel = langLabelTry();
+                        currentLabel = generalRunner();
                     }
-                    if (currentLabel == 'highlight') {
+                    catch(err){
                         removeLanguageHighlight();
-                        currentLabel = langLabelTry();
+                        currentLabel = generalRunner();
                     }
                 };
             });
@@ -227,9 +227,35 @@ function jobObserver(currentLabel, retryDelay = 500){
     }, retryDelay)
 }
 
-onPageLoad()
-.then((currentLabel) => {
-    jobObserver(currentLabel);
-})
+async function generalRunner(){
+    console.log("Running generalRunner");
+    jobText = getJobDesc();
+    flattened = flattenText(jobText);
+    keywordsStr = getLanguageKeywords(flattened);
+    labelType = langLabelTry(keywordsStr);
+    return labelType;
+}
+
+async function runnerAll() {
+    waiting()
+    .then(() => {
+        jobText = getJobDesc();
+        flattened = flattenText(jobText);
+        keywordsStr = getLanguageKeywords(flattened);
+        labelType = langLabelTry(keywordsStr);
+        jobObserver(labelType);
+        return labelType;
+    })
+    // const labelType = await langLabelTry();
+    // console.log("onPageLoad", labelType);
+}
+
+
+// onPageLoad()
+// .then((currentLabel) => {
+//     jobObserver(currentLabel);
+// })
 
 // jobObserver(currentLabel);
+
+runnerAll()
