@@ -1,8 +1,6 @@
-// find DOM object that corresponds to job desc
-
 async function waiting() {
     console.log("Before sleep");
-    await sleep(7000); // Sleep for 5 seconds
+    await sleep(7000); // Sleep for 7 seconds
     console.log("After sleep [After 7 Seconds]");
     return true;
 }
@@ -10,11 +8,9 @@ async function waiting() {
 async function sleep(ms) {
     await new Promise((resolve) => setTimeout(resolve, ms));
 }
-  
+
 // Fetches the job description from the DOM after waiting for the page to load  
-async function getJobDesc() {
-    const waited = await waiting()
-    // console.log("Waiting finished: ", waited);
+function getJobDesc() {
     console.log("Running getJobDesc");
     const jobDesc = document.getElementById("job-details");
     if(jobDesc) {
@@ -23,13 +19,11 @@ async function getJobDesc() {
         jobDesc.childNodes.forEach((node) => {
             text.push(node.textContent);
         });
-        // console.log(text);
         return text;
     };
 }
 
-async function flattenText() {
-    const acquired_text = await getJobDesc()
+function flattenText(acquired_text) {
     console.log("Running flattenText");
     var arrayLength = acquired_text.length;
     for (var i = 0; i < arrayLength; i++) {
@@ -37,7 +31,6 @@ async function flattenText() {
         acquired_text[i] = acquired_text[i].replace(/\s+/g, " ");
         acquired_text[i] = acquired_text[i].replace(/\n/g, " ");
         acquired_text[i] = acquired_text[i].concat(acquired_text[i]," ");
-        // console.log(acquired_text[i]);
     }
     var all_text = acquired_text.join(",");
     all_text = all_text.replace(" , , , ,", " ");
@@ -47,8 +40,7 @@ async function flattenText() {
 }
 
 // Searches the jobDesc for language keywords and returns a string of found languages
-async function getLanguageKeywords(){
-    const fullText = await flattenText()
+function getLanguageKeywords(fullText){
     console.log("Running getLanguageKeywords");
     const isGerman = fullText.includes("german") || fullText.includes("deutsch") || fullText.includes("deutschkenntnisse") ;
     const isEnglish = fullText.includes("english") || fullText.includes("englischkenntnisse");
@@ -78,71 +70,119 @@ async function getLanguageKeywords(){
     return outputString;
 }
 
-// getLanguageKeywords();
-
-
-// Add Observer to Observe the DOM
-// const observer = new MutationObserver((mutations) => {
-//     mutations.forEach((mutation) => {
-//         if (mutation.type === "childList") {
-//             console.log("Child list mutation detected");
-//         };
-//     });
-// });
-
-// // Start observing the DOM
-// observer.observe(document, { childList: true, subtree: true });
-
-// pulls html from site, makes copy to add button, creates button with languages, adds to DOM
-
-async function addLanguageBubble(){
-    const fullText = await getLanguageKeywords()
+function addLanguageBubble(fullText){
     console.log("Running addLanguageBubble");
     var parent = document.getElementsByClassName("job-details-fit-level-preferences");
-    var ref = parent[0]
+    var ref = parent[0];
     var kids = ref.children;
     var child = kids[0];
 
     var languageLabel = child.cloneNode(true);
-    const outputStr = "Languages: "
+    const outputStr = "Languages: ";
     const outputLabel = outputStr.concat(fullText);
     languageLabel.innerText = outputLabel;
 
     ref.insertBefore(languageLabel,null);
+    return "bubble";
 }
 
-async function addLanguageHighlight(){
-    const fullText = await getLanguageKeywords();
+function addLanguageHighlight(fullText){
     console.log("Running addLanguageHighlight");
     var parent = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight job-details-jobs-unified-top-card__job-insight--highlight");
     var ref = parent[0];
-    console.log("parent", parent);
-
 
     var example_detail = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary");
-
-    console.log("example_detail", example_detail[0]);
-    // var kids = ref.children;
-    // console.log("kids", kids);
-    // var child = kids[0];
-
-    // var test = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary");
-    // console.log("test", test);
-    // console.log("parent of test", test.parentNode)
 
     var languageLabel = example_detail[0].cloneNode(true);
     const outputStr = "Languages: ";
     const outputLabel = outputStr.concat(fullText);
     languageLabel.innerText = outputLabel;
 
-    ref.insertBefore(languageLabel,null);  
+    ref.insertBefore(languageLabel,null);
+    return "highlight";
 }
 
-try{
-    addLanguageBubble();
+function removeLanguageBubble(){
+    var parent = document.getElementsByClassName("job-details-fit-level-preferences");
+    var ref = parent[0];
+    var kids = ref.children;
+    var child = kids[kids.length-1];
+    child.remove();
+    console.log("attempted to remove bubble.");
+    return true;
+}
 
+function removeLanguageHighlight(){
+    var example_detail = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary");
+    var child = example_detail[example_detail.length-1];
+    child.remove();
+    console.log("attempted to remove bubble.");
+    return true;
 }
-catch(err){
-    console.log('error: ', err);
-    addLanguageHighlight();
+
+function langLabelTry(fullText) {
+    try{
+        var labelType = addLanguageBubble(fullText);
+        console.log("lanLabelTry", labelType);
+        return labelType;
+    }
+    catch(err){
+        console.log('error: ', err);
+        var labelType = addLanguageHighlight(fullText);
+        return labelType;
+    }
 }
+
+async function jobObserver(currentLabel, retryDelay = 500){
+    setTimeout(() => {
+        var selectedJob = document.querySelector('div[aria-current="page"]');
+        if (!selectedJob) {
+            console.log("job var not found yet, retrying...");
+            jobObserver(retryDelay + 100);
+            return;
+        }
+        console.log('currentLabel', currentLabel);
+        var selectedJobBigElement = selectedJob.parentElement.parentElement;
+        var jobList = selectedJobBigElement.parentElement;
+        // console.log("test", selectedJob);
+        // console.log("parents", selectedJobBigElement);
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === "childList") {
+                    console.log("Child list mutation detected");
+                    try{
+                        removeLanguageBubble();
+                        currentLabel = generalRunner();
+                    }
+                    catch(err){
+                        removeLanguageHighlight();
+                        currentLabel = generalRunner();
+                    }
+                };
+            });
+        });
+        observer.observe(jobList, { childList: true, subtree: true });
+    }, retryDelay)
+}
+
+async function generalRunner(){
+    console.log("Running generalRunner");
+    jobText = getJobDesc();
+    flattened = flattenText(jobText);
+    keywordsStr = getLanguageKeywords(flattened);
+    labelType = langLabelTry(keywordsStr);
+    return labelType;
+}
+
+async function main() {
+    waiting()
+    .then(() => {
+        generalRunner();
+        jobObserver(labelType);
+        return labelType;
+    })
+    // const labelType = await langLabelTry();
+    // console.log("onPageLoad", labelType);
+}
+
+main();
