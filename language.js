@@ -144,8 +144,6 @@ async function jobObserver(currentLabel, retryDelay = 500){
         console.log('currentLabel', currentLabel);
         var selectedJobBigElement = selectedJob.parentElement.parentElement;
         var jobList = selectedJobBigElement.parentElement;
-        // console.log("test", selectedJob);
-        // console.log("parents", selectedJobBigElement);
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.type === "childList") {
@@ -181,8 +179,6 @@ async function main() {
         jobObserver(labelType);
         return labelType;
     })
-    // const labelType = await langLabelTry();
-    // console.log("onPageLoad", labelType);
 }
 
 main();
