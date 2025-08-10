@@ -78,8 +78,14 @@ function addLanguageBubble(fullText){
     var child = kids[0];
 
     var languageLabel = child.cloneNode(true);
-    const outputStr = "Languages: ";
-    const outputLabel = outputStr.concat(fullText);
+    var outputLabel = "";
+    if (fullText === "") {
+        outputLabel = "No Language Specified";
+    } else {
+        const outputStr = "Languages: ";
+        outputLabel = outputStr.concat(fullText);
+    }
+    
     languageLabel.innerText = outputLabel;
 
     ref.insertBefore(languageLabel,null);
