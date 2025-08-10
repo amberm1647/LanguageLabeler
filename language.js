@@ -122,7 +122,7 @@ function removeLanguageHighlight(){
     var example_detail = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary");
     var child = example_detail[example_detail.length-1];
     child.remove();
-    console.log("attempted to remove bubble.");
+    console.log("attempted to remove highlight.");
     return true;
 }
 
@@ -159,7 +159,7 @@ async function jobObserver(currentLabel, retryDelay = 500){
                         currentLabel = generalRunner();
                     }
                     catch(err){
-                        removeLanguageHighlight();
+                        // removeLanguageHighlight();
                         currentLabel = generalRunner();
                     }
                 };
