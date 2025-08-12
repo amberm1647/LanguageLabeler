@@ -78,8 +78,14 @@ function addLanguageBubble(fullText){
     var child = kids[0];
 
     var languageLabel = child.cloneNode(true);
-    const outputStr = "Languages: ";
-    const outputLabel = outputStr.concat(fullText);
+    var outputLabel = "";
+    if (fullText === "") {
+        outputLabel = "No Language Specified";
+    } else {
+        const outputStr = "Languages: ";
+        outputLabel = outputStr.concat(fullText);
+    }
+    
     languageLabel.innerText = outputLabel;
 
     ref.insertBefore(languageLabel,null);
@@ -116,7 +122,7 @@ function removeLanguageHighlight(){
     var example_detail = document.getElementsByClassName("job-details-jobs-unified-top-card__job-insight-view-model-secondary");
     var child = example_detail[example_detail.length-1];
     child.remove();
-    console.log("attempted to remove bubble.");
+    console.log("attempted to remove highlight.");
     return true;
 }
 
@@ -144,8 +150,6 @@ async function jobObserver(currentLabel, retryDelay = 500){
         console.log('currentLabel', currentLabel);
         var selectedJobBigElement = selectedJob.parentElement.parentElement;
         var jobList = selectedJobBigElement.parentElement;
-        // console.log("test", selectedJob);
-        // console.log("parents", selectedJobBigElement);
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.type === "childList") {
@@ -155,7 +159,7 @@ async function jobObserver(currentLabel, retryDelay = 500){
                         currentLabel = generalRunner();
                     }
                     catch(err){
-                        removeLanguageHighlight();
+                        // removeLanguageHighlight();
                         currentLabel = generalRunner();
                     }
                 };
@@ -181,8 +185,6 @@ async function main() {
         jobObserver(labelType);
         return labelType;
     })
-    // const labelType = await langLabelTry();
-    // console.log("onPageLoad", labelType);
 }
 
 main();
