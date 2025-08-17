@@ -47,6 +47,7 @@ function getLanguageKeywords(fullText){
     const isFrench = fullText.includes("français") || fullText.includes("french");
     const isSpanish = fullText.includes("spanish");
     const isItalian = fullText.includes("italian") || fullText.includes("italiano");
+    const isPortuguese = fullText.includes("portuguese");
 
     const output = []
     if (isGerman) {
@@ -63,6 +64,9 @@ function getLanguageKeywords(fullText){
     } 
     if (isItalian) {
         output.push("Italian");
+    }
+    if (isPortuguese) {
+        output.push("Portuguese");
     }
     output.sort();
     const outputString = output.join(", ");
