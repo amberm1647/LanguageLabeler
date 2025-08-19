@@ -39,10 +39,12 @@ function flattenText(acquired_text) {
     return all_text;
 }
 
+
+
 // Searches the jobDesc for language keywords and returns a string of found languages
 function getLanguageKeywords(fullText){
     console.log("Running getLanguageKeywords");
-    const isGerman = fullText.includes("german") || fullText.includes("deutsch") || fullText.includes("deutschkenntnisse") ;
+    const isGerman = fullText.includes(/\bgerman\b/i) || fullText.includes("deutsch") || fullText.includes("deutschkenntnisse") ;
     const isEnglish = fullText.includes("english") || fullText.includes("englischkenntnisse");
     const isFrench = fullText.includes("français") || fullText.includes("french");
     const isSpanish = fullText.includes("spanish");
